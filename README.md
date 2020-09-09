@@ -1,7 +1,7 @@
-#  05_Primeiro-Projeto_React_03
+#  06_GoBarber
 
 O projeto foi desenvolvido dentro do gostack da rockeseat, para o aprendizado no uso da tecnologia reactjs com typescript.
-Essa aplicação foi criada para listar repositório do github consumindo a api do mesmo, basta digitar o "autor/nome do repositório"
+Essa aplicação foi criada para o agendamento de horarios na barbearia e tambem cadastro de barbeiros ofertando seus serviços em hórarios disponiveis.
 
 # Como rodar a aplicação!
   - Baixar rodar um git clone
