@@ -1,7 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup'; // Assim importo tudo para dentro da variavel Yuo todas as validaçoes em vez de ter q ficar importanto validação por validação uma por uma.
+
+import getValidationErrors from '../../utils/getValidationErros';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -11,8 +14,14 @@ import Button from '../../components/Button';
 import { Container, Content, Background } from './styles';
 
 const SignUp: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
+  // console.log(formRef);
+
   const handleSubmit = useCallback(async (data: object) => {
     try {
+      formRef.current?.setErrors({});
+
       const schema = Yup.object().shape({
         // Uso o schemma de Validação para validar um obj inteiro
         name: Yup.string().required('Nome obrigatorio'),
@@ -21,13 +30,16 @@ const SignUp: React.FC = () => {
           .email('Digite um e-mail válido'),
         password: Yup.string().min(6, 'No mínimo 6 dígitos'),
       });
-
+      console.log(data);
       await schema.validate(data, {
         abortEarly: false, // Assim mostra todos os erros e não apenas o primeiro
       });
-      // console.log(data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+
+      const errors = getValidationErrors(err);
+
+      formRef.current?.setErrors(errors);
     }
   }, []);
 
@@ -38,7 +50,7 @@ const SignUp: React.FC = () => {
       <Content>
         <img src={logoImg} alt="gobarber" />
 
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Faça seu cadastro</h1>
 
           <Input name="name" icon={FiUser} placeholder="Nome" />
