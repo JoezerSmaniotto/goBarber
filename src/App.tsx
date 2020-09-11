@@ -6,7 +6,9 @@ import SignUp from './pages/SignUp';
 
 import GlobalStyle from './styles/global';
 // import Routes from './routes';
-import { AuthProvider } from './hooks/AuthContext';
+import ToastContainer from './components/ToastContainer';
+
+import AppProvider from './hooks';
 
 //  O AuthContext.Provider  coloco em volta das variaveis que quero q tenham acesso
 //  Ao meu contexto de aplicação.
@@ -14,9 +16,10 @@ import { AuthProvider } from './hooks/AuthContext';
 
 const App: React.FC = () => (
   <>
-    <AuthProvider>
+    <AppProvider>
       <SignIn />
-    </AuthProvider>
+    </AppProvider>
+
     <GlobalStyle />
   </>
 );
