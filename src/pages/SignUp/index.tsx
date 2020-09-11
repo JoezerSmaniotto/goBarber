@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
-import { FormHandles } from '@unform/core';
+import { FormHandles } from '@unform/core'; // O FormHandles tem as tipagens de todas as tipagens de todas as funções do form, se tem erro, ...
 import { Form } from '@unform/web';
 import * as Yup from 'yup'; // Assim importo tudo para dentro da variavel Yuo todas as validaçoes em vez de ter q ficar importanto validação por validação uma por uma.
 
@@ -14,7 +14,7 @@ import Button from '../../components/Button';
 import { Container, Content, Background } from './styles';
 
 const SignUp: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
+  const formRef = useRef<FormHandles>(null); // Uso para ter acesso ao form e neste caso setar errros atraves do setErrors
 
   // console.log(formRef);
 

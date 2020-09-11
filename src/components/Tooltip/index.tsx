@@ -3,8 +3,8 @@ import React from 'react';
 import { Container } from './styles';
 
 interface TooltipProps {
-  title: string;
-  className?: string;
+  title: string; // O mensagem de erro
+  className?: string; // Para poder estilizar o Tooltip dentro do reactjs tenho q passar o nome de uma classe
 }
 
 const Tooltip: React.FC<TooltipProps> = ({

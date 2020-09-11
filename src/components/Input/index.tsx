@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
-import { useField } from '@unform/core'; // useField recebe o nome do campo enviado pelo form atraves do unform
+import { useField } from '@unform/core'; // 1-1 useField recebe o nome do campo enviado pelo form atraves do unform
 
 import Tooltip from '../Tooltip';
 
@@ -19,10 +19,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
-  const inputRef = useRef<HTMLInputElement>(null); // Faço isso para useref<HTMLInputElement> fazer q esta armazenando a referencia de um input
+  const inputRef = useRef<HTMLInputElement>(null); // 1-4 primeito inporto o useRef, apos Faço isso para useref<HTMLInputElement> fazer q esta armazenando a referencia de um input
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const { fieldName, defaultValue, error, registerField } = useField(name); // 1-2 Esse useField é um hook, que irei passar o nome do input, e irei receber varias propriedades
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
@@ -41,10 +41,10 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
 
   useEffect(() => {
     registerField({
-      //
-      name: fieldName,
-      ref: inputRef.current,
-      path: 'value',
+      // 1-3 Assim que o componente for exibido em tela tenho que fazer o registro dele
+      name: fieldName, // Passou o nome do campo
+      ref: inputRef.current, // referencia para o input, para acessar ele diretamente
+      path: 'value', // De onde eu pego o valor dele
     });
   }, [fieldName, registerField]);
 

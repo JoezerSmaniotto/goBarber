@@ -1,9 +1,10 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react'; // useContext
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
+import { useAuth } from '../../hooks/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 
 import logoImg from '../../assets/logo.svg';
@@ -13,32 +14,51 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background } from './styles';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: object) => {
-    try {
-      formRef.current?.setErrors({});
+  // const { user, signIn } = useContext(AuthContext);
+  const { user, signIn } = useAuth(); // COm esse hock tenho acesso ao user e o signIn
 
-      const schema = Yup.object().shape({
-        // Uso o schemma de Validação para validar um obj inteiro
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatório'),
-      });
-      console.log(data);
-      await schema.validate(data, {
-        abortEarly: false, // Assim mostra todos os erros e não apenas o primeiro
-      });
-    } catch (err) {
-      // console.log(err);
+  console.log(user);
 
-      const errors = getValidationErrors(err);
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        const schema = Yup.object().shape({
+          // Uso o schemma de Validação para validar um obj inteiro
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatório'),
+        });
+        // console.log(data);
+
+        await schema.validate(data, {
+          abortEarly: false, // Assim mostra todos os erros e não apenas o primeiro
+        });
+
+        signIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        // if(err inst)
+
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [signIn],
+  );
 
   return (
     <Container>

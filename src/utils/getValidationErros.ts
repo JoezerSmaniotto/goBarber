@@ -3,7 +3,7 @@ import { ValidationError } from 'yup';
 interface Errors {
   [key: string]: string; // Assim eu digo q tenho uma string na chave outra no valor, assim fica dinamico
 }
-// tipo a função com erro yup para me dar acesso aos campos q quero com mensagens.. (err: ValidationError)
+// tipo a função com erro yup para me dar acesso aos campos q quero com mensagens.. por isso (err: ValidationError)
 // Retorno Errors
 export default function getValidationErrors(err: ValidationError): Errors {
   const ValidationErrors: Errors = {};
